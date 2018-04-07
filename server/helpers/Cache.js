@@ -36,7 +36,7 @@ class CacheAPI {
   }
 
   get(key) {
-    if (typeof key === 'undefined') {
+    if (typeof key === 'undefined' || key === '') {
       throw new Error('Key can\'t be undefined!');
     }
 
