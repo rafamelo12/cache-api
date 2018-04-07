@@ -1,5 +1,5 @@
 const CacheAPI = require('../helpers/Cache');
-let cache = new CacheAPI(3);
+let cache = new CacheAPI();
 module.exports = (app) => {
   app.get('/', (req, res) => {
     res.status(200).send('Hi there!')

@@ -1,4 +1,5 @@
 const randomString = require('randomstring');
+const Product = require('../models/Product');
 class CacheAPI {
   constructor(maxSize, duration) {
     this.cache = Object.create(null);
@@ -16,18 +17,22 @@ class CacheAPI {
     if (oldRecord) {
       oldRecord.value = randomString.generate();
       oldRecord.TTL = Date.now() + this.duration;
+      this.saveToDB(key, oldRecord.value);
       return oldRecord;
     } else {
+      let value = randomString.generate();
       if (this.size < this.maxSize) {
+        this.saveToDB(key, value);
         this.cache[key] = {
-          value: randomString.generate(),
+          value: value,
           TTL: Date.now() + this.duration
         }
         this.size++;
       } else {
+        this.saveToDB(key, value);
         this.remove(this.getOldestRecord());
         this.cache[key] = {
-          value: randomString.generate(),
+          value: value,
           TTL: Date.now() + this.duration
         }
       }
@@ -49,7 +54,7 @@ class CacheAPI {
       console.log('Cache miss!');
       data = {};
       data.value = randomString.generate();
-      return this.put(key, data.value);
+      return this.put(key);
     }
   }
 
@@ -91,6 +96,24 @@ class CacheAPI {
   checkIfKeyExists(key) {
     let keys = Object.keys(this.cache);
     return keys.includes(key);
+  }
+
+  saveToDB(key, data) {
+    Product.findOne({key: key}, (err, product) => {
+      if (err) throw new Error(err);
+      if (product) {
+        product.dummyData = data;
+        product.save((err, updatedProduct) => {
+          if (err) throw new Error(err);
+          return true;
+        });
+      } else {
+        Product.create({key: key, dummyData: data}, (err) => {
+          if (err) throw new Error(err);
+          return true;
+        })
+      }
+    })
   }
 }
 
