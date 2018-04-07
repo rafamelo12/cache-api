@@ -178,7 +178,7 @@ class CacheAPI {
     Method that will persists the updated data to DB.
     @params:
     key: Key of the object in cache (string)
-    data: The new data it will shall save to the object in the DB
+    data: The new data it will shall save to the object in the DB.
   */
 
   saveToDB(key, data) {
