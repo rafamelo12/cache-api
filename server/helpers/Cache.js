@@ -1,7 +1,15 @@
 const randomString = require('randomstring');
 const Product = require('../models/Product');
 class CacheAPI {
-  constructor(maxSize, duration) {
+  constructor(maxSize, duration ) {
+    if (typeof maxSize !== 'undefined' && maxSize < 0) {
+      throw new Error('Cache size can\'t be negative!');
+    }
+
+    if (typeof duration !== 'undefined' && duration < 0) {
+      throw new Error('Item lifetime can\'t be negative!');
+    }
+
     this.cache = Object.create(null);
     this.maxSize = maxSize || 100;
     this.duration = duration || 60000;
@@ -9,7 +17,7 @@ class CacheAPI {
   }
 
   put(key) {
-    if (typeof key === 'undefined') {
+    if (typeof key === 'undefined' || key === '') {
       throw new Error('Key can\'t be undefined!');
     }
 
@@ -59,7 +67,7 @@ class CacheAPI {
   }
 
   remove(key) {
-    if (typeof key === 'undefined') {
+    if (typeof key === 'undefined' || key === '') {
       throw new Error('Key can\'t be undefined!');
     }
 
