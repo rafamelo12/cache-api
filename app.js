@@ -24,10 +24,12 @@ require('./server/routes/index')(app);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);
-  res.status(500).send({
+  res.status(400).send({
     err: err.message
   });
 });
+
+module.export = app;
 
 app.listen(port);
 console.log('Witchcraft happening at port: ' + port);
