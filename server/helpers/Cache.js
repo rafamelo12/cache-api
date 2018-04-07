@@ -64,7 +64,7 @@ class CacheAPI {
     }
 
     if (!this.checkIfKeyExists(key)) {
-      throw new Error('Key doesn\'t exists!');
+      return false;
     }
     return delete this.cache[key];
   }

@@ -5,7 +5,7 @@ module.exports = (app) => {
     res.status(200).send('Hi there!')
   });
 
-  app.get('/getKey', (req, res) => {
+  app.get('/getItem', (req, res) => {
     let key = req.query.key;
     let data = cache.get(key);
     res.status(200).send({
@@ -13,13 +13,19 @@ module.exports = (app) => {
     });
   });
 
-  app.delete('/deleteKey', (req, res) => {
+  app.delete('/deleteItem', (req, res) => {
     let key = req.query.key;
-    cache.remove(key);
-    res.send();
+    if (cache.remove(key)) {
+      res.send();
+    } else {
+      res.status(400).send({
+        success: false,
+        message: "Key doesn't exists"
+      });
+    }
   });
 
-  app.get('/keys', (req, res) => {
+  app.get('/getKeys', (req, res) => {
     let keys = cache.getKeys();
     res.send({
       keys: keys
@@ -31,7 +37,7 @@ module.exports = (app) => {
     res.send();
   });
 
-  app.get('/getCache', (req, res) => {
+  app.get('/getAllItems', (req, res) => {
     res.send({
       cache: cache.getCache()
     });
