@@ -1,0 +1,23 @@
+{
+  "name": "cache-api",
+  "version": "1.0.0",
+  "description": "Cache API",
+  "main": "app.js",
+  "repository": "git@github.com:rafamelo12/cache-api.git",
+  "author": "Rafael Melo <rafamelo.oliveira@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": "8.10.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.13",
+    "morgan": "^1.9.0",
+    "winston": "^2.4.1"
+  },
+  "devDependencies": {
+    "jasmine": "^3.1.0"
+  }
+}
