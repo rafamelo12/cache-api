@@ -14,12 +14,20 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+
 /* DB CONNECTION */
 const dbConfig = require('./server/config/db');
 mongoose.connect(dbConfig.uri);
 
 /* ROUTES */
 require('./server/routes/index')(app);
+
+app.use((err, req, res, next) => {
+  console.log(err.stack);
+  res.status(500).send({
+    err: err.message
+  });
+});
 
 app.listen(port);
 console.log('Witchcraft happening at port: ' + port);

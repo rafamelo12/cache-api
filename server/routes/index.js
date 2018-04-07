@@ -5,40 +5,18 @@ module.exports = (app) => {
     res.status(200).send('Hi there!')
   });
 
-  app.put('/insert', (req, res) => {
-    let key = req.body.key;
-    try {
-      cache.put(key);
-      res.status(200).send({
-        cache: cache.cache
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send({err: err.message});
-    }
+  app.get('/getKey', (req, res) => {
+    let key = req.query.key;
+    let data = cache.get(key);
+    res.status(200).send({
+      data: data
+    });
   });
 
-  app.get('/get', (req, res) => {
+  app.delete('/deleteKey', (req, res) => {
     let key = req.query.key;
-    try {
-      let data = cache.get(key);
-      res.status(200).send({
-        data: data
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send({err: err.message});
-    }
-  });
-
-  app.delete('/delete', (req, res) => {
-    let key = req.query.key;
-    try {
-      cache.remove(key);
-      res.send();
-    } catch (err) {
-      res.status(500).send({err: err.message});
-    }
+    cache.remove(key);
+    res.send();
   });
 
   app.get('/keys', (req, res) => {
