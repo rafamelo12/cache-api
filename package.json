@@ -10,7 +10,7 @@
     "node": "8.10.0"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "node index.js",
     "test": "./node_modules/mocha/bin/mocha --exit"
   },
   "dependencies": {
