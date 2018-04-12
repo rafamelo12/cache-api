@@ -16,11 +16,15 @@ app.use(bodyParser.urlencoded({
 
 
 /* DB CONNECTION */
-const dbConfig = require('./server/config/db');
+const dbConfig = require('./config/db');
 mongoose.connect(dbConfig.uri);
 
+function closeMongooseConnection() {
+  mongoose.connection.close();
+}
+
 /* ROUTES */
-require('./server/routes/index')(app);
+require('./routes/index')(app);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);
@@ -29,7 +33,5 @@ app.use((err, req, res, next) => {
   });
 });
 
-module.export = app;
-
-app.listen(port);
-console.log('Witchcraft happening at port: ' + port);
+module.exports.app = app;
+module.exports.closeMongoose = closeMongooseConnection;

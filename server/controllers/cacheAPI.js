@@ -75,11 +75,11 @@ module.exports = {
 	},
 
 	getAllItems(req, res) {
-		Product.find({}, 'dummyData TTL', (err, products) => {
+		Product.find({}, 'key dummyData TTL', (err, products) => {
 			if (err) {
 				res.status(500).send(err);
 			} else {
-				res.send(products);
+				res.send({cache: products});
 			}
 		});
 	},
