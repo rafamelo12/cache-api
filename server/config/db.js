@@ -1,3 +1,3 @@
 module.exports = {
-  uri: "mongodb://localhost/cache-api"
+  uri: process.env.DB_URI || "mongodb://localhost/cache-api"
 }
