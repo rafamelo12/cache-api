@@ -3,12 +3,10 @@ const Schema = mongoose.Schema;
 const productSchema = Schema({
   key: String,
   dummyData: String,
-  updatedAt: {
+  TTL: {
     type: Date,
     default: Date.now,
-    index: {
-      expires: process.env.TTL || 3600
-    }
+    expires: process.env.TTL || '60s'
   }
 });
 
